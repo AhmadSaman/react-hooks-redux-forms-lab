@@ -1,7 +1,26 @@
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import BandInput from "./BandInput";
+import { bandAdded } from "./bandsSlice";
 function BandsContainer() {
-  return <div>BandsContainer</div>;
+	const dispatch = useDispatch();
+	const state = useSelector((state) => state);
+	console.log(state.bands.entities);
+	function onBandSubmit(name) {
+		dispatch(bandAdded(name));
+	}
+
+	return (
+		<div>
+			{" "}
+			<BandInput onBandSubmit={onBandSubmit} />
+			<ul>
+				{state.bands.entities.map((name) => (
+					<li key={name}>{name}</li>
+				))}
+			</ul>
+		</div>
+	);
 }
 
 export default BandsContainer;
